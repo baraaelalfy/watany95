@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اليوم الوطني 95</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #16a34a; /* A shade of green */
+            color: #fff;
+            direction: rtl;
+            text-align: right;
+            scroll-behavior: smooth;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 50;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.5s linear;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            color: #000;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 80%;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-content.green-bg {
+            background-color: #16a34a;
+            color: #fff;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #000;
+        }
+
+        .modal-content.green-bg .modal-close {
+            color: #fff;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+    </style>
+</head>
+<body class="bg-green-700 font-tajawal">
+
+    <!-- Header Section -->
+    <header class="flex items-center justify-between p-4 bg-green-800 shadow-lg">
+        <!-- Left Flag Image -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/2560px-Flag_of_Saudi_Arabia.svg.png" alt="Saudi Flag" class="w-16 h-10 md:w-24 md:h-14 rounded-lg shadow-lg">
+        
+        <!-- Header Text -->
+        <h1 class="text-3xl md:text-5xl font-bold text-white text-center">اليوم الوطني 95</h1>
+        
+        <!-- Right Flag Image -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/2560px-Flag_of_Saudi_Arabia.svg.png" alt="Saudi Flag" class="w-16 h-10 md:w-24 md:h-14 rounded-lg shadow-lg">
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Buttons Section -->
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
+            <button id="whatIsButton" class="bg-white text-green-700 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-green-100">
+                ما هو اليوم الوطني
+            </button>
+            <button id="whenIsButton" class="bg-white text-green-700 font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-green-100">
+                متى اليوم الوطني 95
+            </button>
+        </div>
+
+        <!-- Saudi Flag Image -->
+        <div class="flex justify-center mt-12">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Saudi_Arabia.svg/2560px-Flag_of_Saudi_Arabia.svg.png" alt="Saudi Arabia Flag" class="w-2/3 md:w-1/2 rounded-xl shadow-2xl">
+        </div>
+
+        <!-- Add Entry Form -->
+        <div class="bg-white p-8 mt-12 rounded-xl shadow-2xl text-black">
+            <h2 class="text-2xl font-bold text-center mb-6">شاركنا احتفالك</h2>
+            <form id="entryForm" class="space-y-4">
+                <div>
+                    <label for="studentName" class="block text-lg font-semibold">اسم الطالب:</label>
+                    <input type="text" id="studentName" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="اكتب اسمك هنا" required>
+                </div>
+                <div>
+                    <label for="studentClass" class="block text-lg font-semibold">الفصل:</label>
+                    <input type="text" id="studentClass" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="اكتب فصلك هنا" required>
+                </div>
+                <div>
+                    <label for="studentSection" class="block text-lg font-semibold">الشعبة:</label>
+                    <input type="text" id="studentSection" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="اكتب شعبتك هنا" required>
+                </div>
+                <button type="submit" id="submitButton" class="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 hover:bg-green-700">
+                    إضافة
+                </button>
+            </form>
+            <div id="loading" class="mt-4 text-center text-gray-500 hidden">
+                جاري إرسال المشاركة...
+            </div>
+        </div>
+
+        <!-- Submitted Entries Display -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold text-center mb-6">مشاركات الطلاب</h2>
+            <div id="entriesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Entries will be dynamically added here -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Modal for "What is National Day" -->
+    <div id="whatModal" class="modal-overlay">
+        <div class="modal-content text-lg">
+            <span class="modal-close cursor-pointer text-gray-400 hover:text-gray-600">&times;</span>
+            <h3 class="text-3xl font-bold mb-4">ما هو اليوم الوطني؟</h3>
+            <p>
+                اليوم الوطني السعودي هو يوم توحيد المملكة العربية السعودية، ويصادف يوم 23 سبتمبر من كل عام. في هذا اليوم، تم توحيد مناطق المملكة تحت راية واحدة على يد الملك المؤسس عبدالعزيز بن عبدالرحمن آل سعود رحمه الله.
+            </p>
+        </div>
+    </div>
+
+    <!-- Modal for "When is National Day" -->
+    <div id="whenModal" class="modal-overlay">
+        <div class="modal-content green-bg text-lg">
+            <span class="modal-close cursor-pointer text-white hover:text-gray-200">&times;</span>
+            <h3 class="text-3xl font-bold mb-4">متى اليوم الوطني 95؟</h3>
+            <p class="text-4xl font-extrabold my-8">
+                23 سبتمبر
+            </p>
+            <p>
+                نحتفل باليوم الوطني السعودي في الثالث والعشرين من شهر سبتمبر من كل عام.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 p-4 bg-white text-gray-800 text-center rounded-t-xl shadow-inner">
+        <p class="font-bold">المنشئ الطالب / براء الألفي من مدرسة العباس بن عبد المطلب</p>
+    </footer>
+
+    <!-- Firebase Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        setLogLevel('debug');
+
+        // Check for Firebase config variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        
+        let userId = null;
+
+        // Firebase Authentication
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // User is signed in.
+                userId = user.uid;
+                console.log('User signed in:', userId);
+                // Load and display entries
+                loadEntries();
+            } else {
+                // User is signed out.
+                console.log('No user signed in. Signing in anonymously...');
+                try {
+                    if (initialAuthToken) {
+                        await signInWithCustomToken(auth, initialAuthToken);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Error signing in:", error);
+                }
+            }
+        });
+
+        const entriesCollectionRef = collection(db, `artifacts/${appId}/public/data/nationalDayEntries`);
+        const entriesListDiv = document.getElementById('entriesList');
+        const loadingDiv = document.getElementById('loading');
+        const submitButton = document.getElementById('submitButton');
+
+        // Function to load and display entries from Firestore
+        const loadEntries = () => {
+            const q = query(entriesCollectionRef, orderBy('createdAt', 'desc'));
+
+            onSnapshot(q, (snapshot) => {
+                entriesListDiv.innerHTML = ''; // Clear previous entries
+                if (!snapshot.empty) {
+                    snapshot.forEach((doc) => {
+                        const data = doc.data();
+                        const entryDiv = document.createElement('div');
+                        entryDiv.className = 'bg-white text-black p-6 rounded-xl shadow-lg';
+                        entryDiv.innerHTML = `
+                            <p class="text-gray-600 text-sm mb-2">معرف المستخدم: <span class="font-mono text-xs">${data.userId}</span></p>
+                            <p class="font-bold text-xl">${data.name}</p>
+                            <p class="text-gray-700"><strong>الفصل:</strong> ${data.studentClass}</p>
+                            <p class="text-gray-700"><strong>الشعبة:</strong> ${data.studentSection}</p>
+                        `;
+                        entriesListDiv.appendChild(entryDiv);
+                    });
+                } else {
+                    entriesListDiv.innerHTML = '<p class="text-center text-white">لا توجد مشاركات حتى الآن. كن أول من يشارك!</p>';
+                }
+            });
+        };
+
+        // Handle form submission
+        document.getElementById('entryForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!userId) {
+                console.error('User not authenticated.');
+                return;
+            }
+
+            const studentName = document.getElementById('studentName').value;
+            const studentClass = document.getElementById('studentClass').value;
+            const studentSection = document.getElementById('studentSection').value;
+            
+            try {
+                await addDoc(entriesCollectionRef, {
+                    name: studentName,
+                    studentClass: studentClass,
+                    studentSection: studentSection,
+                    userId: userId,
+                    createdAt: serverTimestamp()
+                });
+                document.getElementById('entryForm').reset();
+            } catch (error) {
+                console.error("Error adding document: ", error);
+            }
+        });
+        
+        // Modal logic
+        const whatModal = document.getElementById('whatModal');
+        const whenModal = document.getElementById('whenModal');
+        const whatIsButton = document.getElementById('whatIsButton');
+        const whenIsButton = document.getElementById('whenIsButton');
+        const modals = [whatModal, whenModal];
+
+        const openModal = (modal) => {
+            modal.classList.add('active');
+        };
+
+        const closeModal = (modal) => {
+            modal.classList.remove('active');
+        };
+
+        whatIsButton.addEventListener('click', () => openModal(whatModal));
+        whenIsButton.addEventListener('click', () => openModal(whenModal));
+
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+                    closeModal(modal);
+                }
+            });
+        });
+
+    </script>
+
+</body>
+</html>
