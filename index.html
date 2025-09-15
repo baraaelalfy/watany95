@@ -16,7 +16,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background-color: rgba(0, 0, 0, 0.7);
+      background-color: rgba(0,0,0,0.7);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -38,21 +38,9 @@
       text-align: center;
       position: relative;
     }
-    .modal-content.green-bg {
-      background: #16a34a;
-      color: #fff;
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .modal-content.green-bg .modal-close {
-      color: #fff;
-    }
+    .modal-content.green-bg { background: #16a34a; color: #fff; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; font-weight: bold; cursor: pointer; }
+    .modal-content.green-bg .modal-close { color: #fff; }
   </style>
 </head>
 <body>
@@ -68,17 +56,15 @@
 
   <!-- Buttons -->
   <div class="flex flex-col md:flex-row justify-center items-center gap-6 mt-12">
-    <button id="whatIsButton"
-      class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100 transition">
+    <button id="whatIsButton" class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100 transition">
       ما هو اليوم الوطني
     </button>
-    <button id="whenIsButton"
-      class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100 transition">
+    <button id="whenIsButton" class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100 transition">
       متى اليوم الوطني 95
     </button>
   </div>
 
-  <!-- Flag Image -->
+  <!-- Flag -->
   <div class="flex justify-center mt-12">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg"
          alt="علم السعودية" class="w-3/4 md:w-1/2 rounded-xl shadow-2xl">
@@ -100,10 +86,7 @@
         <label for="studentSection" class="block text-lg font-semibold">الشعبة:</label>
         <input type="text" id="studentSection" class="w-full p-3 border rounded-lg" placeholder="اكتب شعبتك هنا" required>
       </div>
-      <button type="submit" id="submitButton"
-        class="w-full bg-green-600 text-white text-xl font-bold py-3 rounded-full shadow-lg hover:bg-green-700 transition">
-        إضافة
-      </button>
+      <button type="submit" class="w-full bg-green-600 text-white text-xl font-bold py-3 rounded-full shadow-lg hover:bg-green-700 transition">إضافة</button>
     </form>
     <div id="loading" class="mt-4 text-center text-gray-500 hidden">جاري إرسال المشاركة...</div>
   </div>
@@ -141,71 +124,76 @@
     <p class="font-bold text-lg">المنشئ الطالب / براء الألفي من مدرسة العباس بن عبد المطلب</p>
   </footer>
 
-  <!-- Firebase + Modal Script -->
+  <!-- Firebase + Modals Script -->
   <script type="module">
-    // Firebase: انسخ كودك هنا كما هو
-    // --------------------------------------------------------------------
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-    const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-    const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    const firebaseConfig = {
+      apiKey: "AIzaSyXXXX...", 
+      authDomain: "watany95.firebaseapp.com",
+      projectId: "watany95",
+      storageBucket: "watany95.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
 
     const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
     const auth = getAuth(app);
-    let userId = null;
+    const db = getFirestore(app);
 
-    onAuthStateChanged(auth, async (user) => {
-      if (user) { userId = user.uid; loadEntries(); }
-      else { initialAuthToken ? await signInWithCustomToken(auth, initialAuthToken) : await signInAnonymously(auth); }
+    let userId = null;
+    onAuthStateChanged(auth, async user => {
+      if(user) { userId = user.uid; loadEntries(); }
+      else { await signInAnonymously(auth); }
     });
 
-    const entriesCollectionRef = collection(db, `artifacts/${appId}/public/data/nationalDayEntries`);
+    const entriesCollectionRef = collection(db, "nationalDayEntries");
     const entriesListDiv = document.getElementById('entriesList');
 
     const loadEntries = () => {
       const q = query(entriesCollectionRef);
-      onSnapshot(q, (snapshot) => {
+      onSnapshot(q, snapshot => {
         const entries = [];
-        snapshot.forEach((doc) => entries.push({ id: doc.id, ...doc.data() }));
+        snapshot.forEach(doc => entries.push({id: doc.id, ...doc.data()}));
         entries.sort((a,b)=>b?.createdAt?.seconds - a?.createdAt?.seconds);
         entriesListDiv.innerHTML = '';
         if(entries.length){
-          entries.forEach((data)=>{
-            const entryDiv = document.createElement('div');
-            entryDiv.className = 'bg-white text-black p-6 rounded-xl shadow-lg';
-            entryDiv.innerHTML = `
-              <p class="text-gray-600 text-sm mb-2">معرف المستخدم: <span class="font-mono text-xs">${data.userId}</span></p>
+          entries.forEach(data=>{
+            const div = document.createElement('div');
+            div.className='bg-white text-black p-6 rounded-xl shadow-lg';
+            div.innerHTML = `
               <p class="font-bold text-xl">${data.name}</p>
-              <p class="text-gray-700"><strong>الفصل:</strong> ${data.studentClass}</p>
-              <p class="text-gray-700"><strong>الشعبة:</strong> ${data.studentSection}</p>
+              <p><strong>الفصل:</strong> ${data.studentClass}</p>
+              <p><strong>الشعبة:</strong> ${data.studentSection}</p>
             `;
-            entriesListDiv.appendChild(entryDiv);
+            entriesListDiv.appendChild(div);
           });
-        } else { entriesListDiv.innerHTML = '<p class="text-center text-white">لا توجد مشاركات حتى الآن. كن أول من يشارك!</p>'; }
+        } else entriesListDiv.innerHTML = '<p class="text-center text-white">لا توجد مشاركات حتى الآن.</p>';
       });
     };
 
-    document.getElementById('entryForm').addEventListener('submit', async (e)=>{
+    document.getElementById('entryForm').addEventListener('submit', async e => {
       e.preventDefault();
       if(!userId) return;
-      const studentName = document.getElementById('studentName').value;
-      const studentClass = document.getElementById('studentClass').value;
-      const studentSection = document.getElementById('studentSection').value;
-      await addDoc(entriesCollectionRef,{name: studentName, studentClass, studentSection, userId, createdAt: serverTimestamp()});
+      await addDoc(entriesCollectionRef,{
+        name: document.getElementById('studentName').value,
+        studentClass: document.getElementById('studentClass').value,
+        studentSection: document.getElementById('studentSection').value,
+        userId,
+        createdAt: serverTimestamp()
+      });
       e.target.reset();
     });
 
     // Modals
     const whatModal = document.getElementById('whatModal');
     const whenModal = document.getElementById('whenModal');
-    document.getElementById('whatIsButton').addEventListener('click',()=>whatModal.classList.add('active'));
-    document.getElementById('whenIsButton').addEventListener('click',()=>whenModal.classList.add('active'));
-    document.querySelectorAll('.modal-close').forEach(btn=>btn.addEventListener('click',()=>btn.closest('.modal-overlay').classList.remove('active')));
+    document.getElementById('whatIsButton').addEventListener('click', ()=>whatModal.classList.add('active'));
+    document.getElementById('whenIsButton').addEventListener('click', ()=>whenModal.classList.add('active'));
+    document.querySelectorAll('.modal-close').forEach(btn=>btn.addEventListener('click', ()=>btn.closest('.modal-overlay').classList.remove('active')));
     document.querySelectorAll('.modal-overlay').forEach(modal=>modal.addEventListener('click', e=>{if(e.target===modal) modal.classList.remove('active');}));
-  </script>
+</script>
 </body>
 </html>
