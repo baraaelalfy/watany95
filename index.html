@@ -34,15 +34,14 @@
       color: #000;
       padding: 2rem;
       border-radius: 1rem;
-      max-width: 600px;
+      max-width: 80%;
       text-align: center;
       position: relative;
-      font-size: 20px;
+      font-size: 1.1rem;
     }
     .modal-content.green-bg { background: #16a34a; color: #fff; }
     .modal-close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; font-weight: bold; cursor: pointer; }
     .modal-content.green-bg .modal-close { color: #fff; }
-    input { outline: none; }
   </style>
 </head>
 <body>
@@ -66,13 +65,13 @@
     </button>
   </div>
 
-  <!-- Flag كبير -->
+  <!-- Flag -->
   <div class="flex justify-center mt-12">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg"
          alt="علم السعودية" class="w-3/4 md:w-1/2 rounded-xl shadow-2xl">
   </div>
 
-  <!-- Form -->
+  <!-- Entry Form -->
   <div class="bg-white p-8 mt-16 rounded-xl shadow-2xl text-black w-11/12 md:w-2/3 mx-auto">
     <h2 class="text-3xl font-bold text-green-700 mb-6">شاركنا احتفالك</h2>
     <input type="text" id="studentName" placeholder="اسم الطالب" class="w-full p-3 border rounded-lg mb-3">
@@ -90,28 +89,28 @@
   </div>
 
   <!-- Modals -->
-<div id="whatModal" class="modal-overlay">
+  <div id="whatModal" class="modal-overlay">
     <div class="modal-content text-lg">
-        <span class="modal-close cursor-pointer text-gray-400 hover:text-gray-600">&times;</span>
-        <h3 class="text-3xl font-bold mb-4">ما هو اليوم الوطني؟</h3>
-        <p class="text-lg leading-relaxed">
-            اليوم الوطني السعودي هو يوم توحيد المملكة العربية السعودية، ويصادف يوم 23 سبتمبر من كل عام. في هذا اليوم، تم توحيد مناطق المملكة تحت راية واحدة على يد الملك المؤسس عبدالعزيز بن عبدالرحمن آل سعود رحمه الله.
-        </p>
+      <span class="modal-close cursor-pointer text-gray-400 hover:text-gray-600">&times;</span>
+      <h3 class="text-3xl font-bold mb-4">ما هو اليوم الوطني؟</h3>
+      <p>
+        اليوم الوطني السعودي هو يوم توحيد المملكة العربية السعودية، ويصادف يوم 23 سبتمبر من كل عام. في هذا اليوم، تم توحيد مناطق المملكة تحت راية واحدة على يد الملك المؤسس عبدالعزيز بن عبدالرحمن آل سعود رحمه الله.
+      </p>
     </div>
-</div>
-<!-- متى اليوم الوطني 95 -->
-<div id="whenModal" class="modal-overlay">
+  </div>
+
+  <div id="whenModal" class="modal-overlay">
     <div class="modal-content green-bg text-lg">
-        <span class="modal-close cursor-pointer text-white hover:text-gray-200">&times;</span>
-        <h3 class="text-3xl font-bold mb-4">متى اليوم الوطني 95؟</h3>
-        <p class="text-4xl font-extrabold my-6">
-            23 سبتمبر
-        </p>
-        <p class="text-lg leading-relaxed">
-            نحتفل باليوم الوطني السعودي في الثالث والعشرين من شهر سبتمبر من كل عام.
-        </p>
+      <span class="modal-close cursor-pointer text-white hover:text-gray-200">&times;</span>
+      <h3 class="text-3xl font-bold mb-4">متى اليوم الوطني 95؟</h3>
+      <p class="text-4xl font-extrabold my-8">
+        23 سبتمبر
+      </p>
+      <p>
+        نحتفل باليوم الوطني السعودي في الثالث والعشرين من شهر سبتمبر من كل عام.
+      </p>
     </div>
-</div>
+  </div>
 
   <!-- Footer -->
   <footer class="mt-16 p-4 bg-white text-gray-800 text-center rounded-t-xl shadow-inner">
