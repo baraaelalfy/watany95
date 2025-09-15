@@ -222,7 +222,8 @@
             }
         });
 
-        const entriesCollectionRef = collection(db, `artifacts/${appId}/public/data/nationalDayEntries`);
+        // تم تغيير هذا المسار لكي يتناسب مع إعداداتك الحالية في قاعدة البيانات
+        const entriesCollectionRef = collection(db, 'nationalDayEntries');
         const entriesListDiv = document.getElementById('entriesList');
         const loadingDiv = document.getElementById('loading');
         const submitButton = document.getElementById('submitButton');
