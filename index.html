@@ -76,8 +76,8 @@
   <div class="bg-white p-8 mt-16 rounded-xl shadow-2xl text-black w-11/12 md:w-2/3 mx-auto">
     <h2 class="text-3xl font-bold text-green-700 mb-6">شاركنا احتفالك</h2>
     <input type="text" id="studentName" placeholder="اسم الطالب" class="w-full p-3 border rounded-lg mb-3">
-    <input type="text" id="studentClass" placeholder="عبارة قصيرة عن اليوم الوطني" class="w-full p-3 border rounded-lg mb-3">
-    <input type="text" id="studentSection" placeholder="الفصل" class="w-full p-3 border rounded-lg mb-3">
+    <input type="text" id="studentClass" placeholder="الفصل" class="w-full p-3 border rounded-lg mb-3">
+    <input type="text" id="studentSection" placeholder="الشعبة" class="w-full p-3 border rounded-lg mb-3">
     <button id="addBtn" class="w-full bg-green-600 text-white text-xl font-bold py-3 rounded-full shadow-lg hover:bg-green-700 transition">إضافة</button>
   </div>
 
@@ -165,7 +165,7 @@
           div.className = 'bg-white text-black p-6 rounded-xl shadow-lg';
           div.innerHTML = `
             <p class="font-bold text-xl">${entry.name}</p>
-            <p><strong>العبارة:</strong> ${entry.studentClass}</p>
+            <p><strong>الفصل:</strong> ${entry.studentClass}</p>
             <p><strong>الشعبة:</strong> ${entry.studentSection}</p>
           `;
           entriesListDiv.appendChild(div);
@@ -192,3 +192,4 @@
   </script>
 </body>
 </html>
+
