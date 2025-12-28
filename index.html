@@ -8,20 +8,22 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- الخط -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 
     body {
       font-family: 'Tajawal', sans-serif;
       background-color: #16a34a;
-      color: #fff;
+      color: white;
       text-align: center;
     }
 
+    /* خلفية المودال */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background-color: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.7);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -53,47 +55,61 @@
 
     .modal-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 10px;
+      right: 15px;
       font-size: 2rem;
       cursor: pointer;
     }
   </style>
 </head>
+
 <body>
 
   <!-- الهيدر -->
   <header class="flex items-center justify-between px-6 py-4 bg-green-800 shadow-lg">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg" class="w-24 h-16">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg"
+         class="w-24 h-16 md:w-32 md:h-20 rounded shadow-lg">
+    
     <h1 class="text-4xl md:text-6xl font-bold">اليوم الوطني 95</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg" class="w-24 h-16">
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg"
+         class="w-24 h-16 md:w-32 md:h-20 rounded shadow-lg">
   </header>
 
-  <!-- الازرار -->
+  <!-- الأزرار -->
   <div class="flex flex-col md:flex-row justify-center gap-6 mt-12">
-    <button id="whatBtn" class="bg-white text-green-700 font-bold py-4 px-10 rounded-full">
+    <button id="whatIsButton"
+      class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100">
       ما هو اليوم الوطني
     </button>
-    <button id="whenBtn" class="bg-white text-green-700 font-bold py-4 px-10 rounded-full">
+
+    <button id="whenIsButton"
+      class="bg-white text-green-700 font-bold py-4 px-10 text-xl rounded-full shadow-lg hover:bg-green-100">
       متى اليوم الوطني 95
     </button>
   </div>
 
-  <!-- العلم الكبير -->
+  <!-- صورة العلم الكبير -->
   <div class="flex justify-center mt-12">
     <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Flag_of_Saudi_Arabia.svg"
          class="w-3/4 md:w-1/2 rounded-xl shadow-2xl">
   </div>
 
-  <!-- الفورم -->
+  <!-- نموذج الإدخال -->
   <div class="bg-white p-8 mt-16 rounded-xl shadow-2xl text-black w-11/12 md:w-2/3 mx-auto">
     <h2 class="text-3xl font-bold text-green-700 mb-6">شاركنا احتفالك</h2>
 
-    <input id="studentName" class="w-full p-3 border rounded-lg mb-3" placeholder="اسم الطالب">
-    <input id="studentClass" class="w-full p-3 border rounded-lg mb-3" placeholder="الفصل">
-    <input id="studentSection" class="w-full p-3 border rounded-lg mb-3" placeholder="الشعبة">
+    <input id="studentName" type="text" placeholder="اسم الطالب"
+      class="w-full p-3 border rounded-lg mb-3">
 
-    <button id="addBtn" class="w-full bg-green-600 text-white py-3 rounded-full">
+    <input id="studentClass" type="text" placeholder="الفصل"
+      class="w-full p-3 border rounded-lg mb-3">
+
+    <input id="studentSection" type="text" placeholder="الشعبة"
+      class="w-full p-3 border rounded-lg mb-3">
+
+    <button id="addBtn"
+      class="w-full bg-green-600 text-white text-xl font-bold py-3 rounded-full hover:bg-green-700">
       إضافة
     </button>
   </div>
@@ -102,43 +118,44 @@
   <div class="mt-12 w-11/12 md:w-2/3 mx-auto">
     <h2 class="text-3xl font-bold mb-6">مشاركات الطلاب</h2>
     <div id="entriesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <p class="text-white">لا توجد مشاركات حتى الآن. كن أول من يشارك!</p>
+      <p class="text-center">لا توجد مشاركات حتى الآن. كن أول من يشارك!</p>
     </div>
   </div>
 
-  <!-- نافذة ما هو -->
+  <!-- مودال ما هو -->
   <div id="whatModal" class="modal-overlay">
     <div class="modal-content">
-      <span class="modal-close text-gray-500">&times;</span>
+      <span class="modal-close">&times;</span>
       <h3 class="text-3xl font-bold mb-4">ما هو اليوم الوطني؟</h3>
       <p>
-        اليوم الوطني السعودي هو يوم توحيد المملكة العربية السعودية ويصادف 23 سبتمبر من كل عام.
+        اليوم الوطني السعودي هو ذكرى توحيد المملكة العربية السعودية
+        على يد الملك عبدالعزيز رحمه الله، ويوافق 23 سبتمبر من كل عام.
       </p>
     </div>
   </div>
 
-  <!-- نافذة متى -->
+  <!-- مودال متى -->
   <div id="whenModal" class="modal-overlay">
     <div class="modal-content green-bg">
-      <span class="modal-close text-white">&times;</span>
+      <span class="modal-close">&times;</span>
       <h3 class="text-3xl font-bold mb-4">متى اليوم الوطني 95؟</h3>
       <p class="text-4xl font-extrabold my-6">23 سبتمبر</p>
-      <p>نحتفل به كل سنة في نفس التاريخ</p>
+      <p>يتم الاحتفال به كل سنة في هذا التاريخ</p>
     </div>
   </div>
 
   <!-- الفوتر -->
   <footer class="mt-16 p-4 bg-white text-gray-800 rounded-t-xl">
-    المنشئ الطالب / براء الألفي من مدرسة العباس بن عبد المطلب
+    <p class="font-bold">المنشئ الطالب / براء الألفي من مدرسة العباس بن عبد المطلب</p>
   </footer>
 
-  <!-- JavaScript + Firebase -->
+  <!-- Firebase + JS -->
   <script type="module">
-    // استيراد فايربيس
+    // ربط Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-    // بيانات المشروع
+    // إعدادات المشروع
     const firebaseConfig = {
       apiKey: "AIzaSyAJCZVoeBRIt_zKcWQ3th51DpNVc4p4_LU",
       authDomain: "watany95-43aa4.firebaseapp.com",
@@ -149,69 +166,65 @@
       appId: "1:978450227359:web:afbcb83c960d241b5f02aa"
     };
 
-    // تشغيل فايربيس
+    // تشغيل Firebase
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // عناصر الصفحة
-    const listBox = document.getElementById("entriesList");
     const addBtn = document.getElementById("addBtn");
+    const list = document.getElementById("entriesList");
 
-    // عند الضغط على إضافة
+    // إضافة مشاركة
     addBtn.onclick = () => {
-      const name = studentName.value;
-      const clas = studentClass.value;
-      const sec = studentSection.value;
+      const name = studentName.value.trim();
+      const cls = studentClass.value.trim();
+      const sec = studentSection.value.trim();
 
-      if(name && clas && sec){
-        // هنا يترسل على firebase
-        const newData = push(ref(db, "students"));
-        set(newData, {
-          name: name,
-          studentClass: clas,
-          studentSection: sec
-        });
-
-        studentName.value = "";
-        studentClass.value = "";
-        studentSection.value = "";
-      } else {
+      if (!name || !cls || !sec) {
         alert("عبّي كل الحقول");
+        return;
       }
+
+      const r = push(ref(db, "students"));
+      set(r, { name, studentClass: cls, studentSection: sec });
+
+      studentName.value = "";
+      studentClass.value = "";
+      studentSection.value = "";
     };
 
-    // عرض البيانات مباشرة
-    onValue(ref(db, "students"), snapshot => {
-      listBox.innerHTML = "";
-      const data = snapshot.val();
+    // عرض المشاركات
+    onValue(ref(db, "students"), snap => {
+      const data = snap.val();
+      list.innerHTML = "";
 
-      if(data){
-        Object.values(data).forEach(e => {
-          const div = document.createElement("div");
-          div.className = "bg-white text-black p-6 rounded-xl shadow-lg";
-          div.innerHTML = `
-            <p class="font-bold text-xl">${e.name}</p>
-            <p>الفصل: ${e.studentClass}</p>
-            <p>الشعبة: ${e.studentSection}</p>
-          `;
-          listBox.appendChild(div);
-        });
-      } else {
-        listBox.innerHTML = "<p>لا توجد مشاركات</p>";
+      if (!data) {
+        list.innerHTML = "<p>لا توجد مشاركات</p>";
+        return;
       }
+
+      Object.values(data).forEach(s => {
+        const d = document.createElement("div");
+        d.className = "bg-white text-black p-6 rounded-xl shadow-lg";
+        d.innerHTML = `
+          <p class="font-bold text-xl">${s.name}</p>
+          <p>الفصل: ${s.studentClass}</p>
+          <p>الشعبة: ${s.studentSection}</p>
+        `;
+        list.appendChild(d);
+      });
     });
 
-    // التحكم بالنوافذ
-    whatBtn.onclick = () => whatModal.classList.add("active");
-    whenBtn.onclick = () => whenModal.classList.add("active");
+    // المودالات
+    whatIsButton.onclick = () => whatModal.classList.add("active");
+    whenIsButton.onclick = () => whenModal.classList.add("active");
 
-    document.querySelectorAll(".modal-close").forEach(x => {
-      x.onclick = () => x.closest(".modal-overlay").classList.remove("active");
-    });
+    document.querySelectorAll(".modal-close").forEach(b =>
+      b.onclick = () => b.closest(".modal-overlay").classList.remove("active")
+    );
 
-    document.querySelectorAll(".modal-overlay").forEach(m => {
-      m.onclick = e => { if(e.target === m) m.classList.remove("active"); }
-    });
+    document.querySelectorAll(".modal-overlay").forEach(m =>
+      m.onclick = e => { if (e.target === m) m.classList.remove("active"); }
+    );
   </script>
 
 </body>
